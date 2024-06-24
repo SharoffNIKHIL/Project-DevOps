@@ -5,30 +5,37 @@ pipeline {
         maven 'Maven3'
     }
     stages {
-        stage ("Cleanup Workspace") {
-            steps {
-                script {
-                    // Clean up the workspace
-                    sh 'rm -rf *'
-                }
-            }
-        }
-
-        stage ("Checkout from SCM") {
+        stage("Checkout from SCM") {
             steps {
                 git branch: 'main', credentialsId: 'github', url: 'https://github.com/SharoffNIKHIL/Project-DevOps.git'
             }
         }
 
-        stage ("Build the Application") {
+        stage("Cleanup Workspace") {
             steps {
-                sh "mvn clean package"
+                script {
+                    sh 'ls -la' // List files before cleanup for debugging
+                    sh 'rm -rf *'
+                    sh 'ls -la' // List files after cleanup for debugging
+                }
             }
         }
 
-        stage ("Testing the Application") {
+        stage("Re-Checkout from SCM") {
             steps {
-                sh "mvn test"
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/SharoffNIKHIL/Project-DevOps.git'
+            }
+        }
+
+        stage("Build the Application") {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage("Testing the Application") {
+            steps {
+                sh 'mvn test'
             }
         }
     }
