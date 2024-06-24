@@ -7,7 +7,9 @@ pipeline {
    stages {
      stage ("Cleanup Workspace"){
         steps {
-            cleanWS ()
+            script {
+                sh 'rm -rf *'
+            }
         }
      }
 
