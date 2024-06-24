@@ -13,7 +13,7 @@ pipeline {
 
      stage ("Checkoput from SCM") {
         steps {
-            git branch: 'main', credentialsId: 'github', url: 'url of the repository'
+            git branch: 'main', credentialsId: 'github', url: 'https://github.com/SharoffNIKHIL/Project-DevOps.git'
         }
      }
 
